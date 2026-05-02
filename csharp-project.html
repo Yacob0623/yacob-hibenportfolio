@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yacob Hiben - C# Project (CIS296)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Yacob Hiben</h1>
+    <p>CIS296 – Advanced C# Project</p>
+</header>
+
+<nav>
+    <div class="nav-row">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="YacobHibenResume.pdf" target="_blank">Resume</a></li>
+            <li><a href="CIS_Syllabi.html">CIS Syllabi</a></li>
+            <li><a href="http://catalog.southeasttech.edu/preview_program.php?catoid=17&poid=2004&hl=%22programming%22" target="_blank">
+                STI CIS Programming Curriculum
+            </a></li>
+        </ul>
+    </div>
+
+    <div class="nav-row">
+        <ul>
+            <li><a href="java-project.html">Java Project (CIS249)</a></li>
+            <li><a href="csharp-project.html">C# Project (CIS296)</a></li>
+            <li><a href="cis241-projects.html">PHP Projects (CIS241)</a></li>
+            <li><a href="cis266-webservices.html">Web Services (CIS266)</a></li>
+            <li><a href="capstone.html">Capstone (CIS248)</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <section>
+        <h2>Project Overview</h2>
+        <p>
+            The SportsPro Technical Support System is a web‑based ASP.NET Core MVC application designed to manage customers, products, technicians, incidents, and product registrations. 
+            The system is used by administrators to maintain data and support technicians in resolving customer incidents.
+        </p>
+    </section>
+
+    <section>
+        <h2>Features</h2>
+        <ul>
+            <li>Entity Framework Core</li>
+            <li>Repository Pattern</li>
+            <li>Unit of Work Pattern</li>
+            <li>Many‑to‑many relationships</li>
+            <li>Data seeding</li>
+            <li>MVC controllers and views</li>
+            <li>Session state</li>
+            <li>LINQ queries with multiple WHERE clauses</li>
+            <li>Navigation properties and Includes</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Screen Captures</h2>
+        <p>Below are sample screenshots of the C# application.</p>
+        <img src="images/csharp_project_screen1.png" alt="C# Project Screenshot 1" style="max-width:100%;height:auto;">
+        <img src="images/csharp_project_screen2.png" alt="C# Project Screenshot 2" style="max-width:100%;height:auto;">
+        <img src="images/csharp_project_screen3.png" alt="C# Project Screenshot 3" style="max-width:100%;height:auto;">
+        <img src="images/csharp_project_screen4.png" alt="C# Project Screenshot 4" style="max-width:100%;height:auto;">
+    </section>
+
+    <section>
+        <h2>Sample Code</h2>
+        <pre><code>
+// Sample C# classes (replace with your real code)
+
+public class SportsProContext : DbContext
+{
+    public SportsProContext(DbContextOptions<SportsProContext> options)
+        : base(options) { }
+
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Incident> Incidents { get; set; }
+    public DbSet<Registration> Registrations { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new RegistrationConfig());
+        ProductSeed.Seed(modelBuilder);
+        CustomerSeed.Seed(modelBuilder);
+    }
+}
+
+public class RegistrationConfig : IEntityTypeConfiguration<Registration>
+{
+    public void Configure(EntityTypeBuilder<Registration> entity)
+    {
+        entity.HasKey(r => new { r.CustomerID, r.ProductID });
+        entity.HasOne(r => r.Customer).WithMany().HasForeignKey(r => r.CustomerID);
+        entity.HasOne(r => r.Product).WithMany().HasForeignKey(r => r.ProductID);
+    }
+}
+
+        </code></pre>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 John Doe. All rights reserved.
+</footer>
+</body>
+</html>

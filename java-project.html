@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yacob Hiben - Java Project (CIS249)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Yacob Hiben</h1>
+    <p>CIS249 – Advanced Java Project</p>
+</header>
+
+<nav>
+    <div class="nav-row">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="YacobHibenResume.pdf" target="_blank">Resume</a></li>
+            <li><a href="CIS_Syllabi.html">CIS Syllabi</a></li>
+            <li><a href="http://catalog.southeasttech.edu/preview_program.php?catoid=17&poid=2004&hl=%22programming%22" target="_blank">
+                STI CIS Programming Curriculum
+            </a></li>
+        </ul>
+    </div>
+
+    <div class="nav-row">
+        <ul>
+            <li><a href="java-project.html">Java Project (CIS249)</a></li>
+            <li><a href="csharp-project.html">C# Project (CIS296)</a></li>
+            <li><a href="cis241-projects.html">PHP Projects (CIS241)</a></li>
+            <li><a href="cis266-webservices.html">Web Services (CIS266)</a></li>
+            <li><a href="capstone.html">Capstone (CIS248)</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <section>
+        <h2>Project Overview</h2>
+        <p>
+            The application is a production-grade, Java-based Warehouse Execution System (WES) designed for a small-scale fulfillment center. 
+            It uses an event-loop architecture to coordinate real-time warehouse operations, including conveyor motor control, address labeling, photoeye-based flow control, and jam detection. 
+            The system communicates with a PLC over Modbus TCP, enabling reliable, deterministic control while supporting simulation and testing without physical hardware.
+        </p>
+    </section>
+
+    <section>
+        <h2>Features</h2>
+        <ul>
+            <li>Java fundamentals: Use classes, interfaces, collections, multithreading, and exception handling to implement core control logic.</li>
+            <li>Maven project & PLC libraries: Build a Java Maven project integrating JLibModbus or Apache PLC4X for Modbus-based PLC communication.</li>
+            <li>Java UI/Dashboard: Develop a Java-based dashboard to visualize system states and monitor real-time PLC interactions.</li>
+            <li>PLC simulator setup: Configure a PLC simulator to emulate warehouse sensors and actuators.</li>
+            <li>Automated logic testing: Use JUnit 5 to validate control logic independently of physical PLC hardware.</li>
+            <li>Manual simulation testing: Use ModbusPal to manually simulate sensors and verify system behavior against expected outcomes.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Screen Captures</h2>
+        <p>Below are sample screenshots of the application in use.</p>
+        
+        <img src="images/java_project_screen1.png" alt="Java Project Screenshot 1" style="max-width:100%;height:auto;">
+        <img src="images/java_project_screen2.png" alt="Java Project Screenshot 2" style="max-width:100%;height:auto;">
+        <img src="images/java_project_screen3.png" alt="Java Project Screenshot 3" style="max-width:100%;height:auto;">
+        <img src="images/java_project_screen4.png" alt="Java Project Screenshot 4" style="max-width:100%;height:auto;">
+        <img src="images/java_project_screen5.png" alt="Java Project Screenshot 5" style="max-width:100%;height:auto;">
+    </section>
+
+    <section>
+        <h2>Sample Code</h2>
+        <pre><code>
+// Sample Java class (replace with your real code)
+
+/**
+ * MHE Controller for Retail Distribution 
+ * Controls: Motors, Labeling, Flow Accumulation, and Jam Detection.
+ */
+public class SmartFulfillmentCenter {
+
+    // PLC Memory Map (Standard Holding Registers)
+    private static final int REG_MOTOR_STATE = 100;    // 1=Run, 0=Stop
+    private static final int REG_LABEL_TRIGGER = 200;  // Write 1 to apply label
+    
+    // Photoeye Sensors (Starting at 300)
+    private static final int REG_PE_FLOW = 300;        // Downstream Flow Sensor
+    private static final int REG_PE_JAM = 301;         // Jam/Labeling Sensor
+    
+    private static final int REG_ALARM_LIGHT = 500;    // Alarm Stack Light
+
+    private ModbusMaster plc;
+    private Instant jamTimer = null;
+    private final Duration JAM_THRESHOLD = Duration.ofSeconds(10); 
+
+    public SmartFulfillmentCenter(String ipAddress) throws Exception {
+        TcpParameters params = new TcpParameters();
+        params.setHost(InetAddress.getByName(ipAddress));
+        params.setPort(502);
+        params.setKeepAlive(true);
+        params.setConnectionTimeout(5000); 
+
+        this.plc = ModbusMasterFactory.createModbusMasterTCP(params);
+        this.plc.setResponseTimeout(5000); 
+        this.plc.connect();
+    }
+        </code></pre>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 Yacob Hiben. All rights reserved.
+</footer>
+</body>
+</html>
